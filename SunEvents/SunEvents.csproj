@@ -45,6 +45,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EventProcessor.cs" />
+    <Compile Include="SunEvent.cs" />
     <Compile Include="SunEventsForm.cs">
       <SubType>Form</SubType>
     </Compile>

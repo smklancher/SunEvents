@@ -12,47 +12,59 @@ namespace SunEvents
 {
     public partial class SunEventsForm : Form
     {
+        private EventProcessor ep = new EventProcessor();
+        private double lat = 33.589952;
+        private double lon = -117.586788;
+
+        #region "Start up"
+
         public SunEventsForm()
         {
             //form icon: http://www.iconsplace.com/orange-icons/sun-icon
             InitializeComponent();
         }
 
-        public void SetInitialData()
+        public void AddDefaultEvents()
         {
-            // Determine the # of hours that the local time is different from UTC/GMT
-            TimeSpan ts = DateTime.Now - DateTime.UtcNow;
+            //Could add interface to edit and persist in the future
+            ep.Events.Add(new SunEvent
+            {
+                Name = "Sleep 7 hours before sunrise (civil)",
+                IsSunrise = true,
+                Offset = new TimeSpan(-7, 0, 0),
+                Command = "psshutdown",
+                CommandArgs = "-d -t 0",
+                RetryPeriod = new TimeSpan(1, 0, 0),
+                IsCivil = true
+            });
 
-            // Get the number of hours difference
-            double TimeZoneDifferenceFromUTC = ts.TotalHours;
-
-            // Get the Latitude
-            double lat = 33.589952;
-
-            // Get the Longtitude
-            double lon = -117.586788;
-
-            // Creae instance of the class
+            //Test event to fire 5 seconds after start
             Twilight c = new Twilight();
+            SunAndMoonData Tomorrow = c.GetData(DateTime.Now.Date, lat, lon, (DateTime.Now - DateTime.UtcNow).TotalHours);
+            TimeSpan OffsetForImmediateEvent = Tomorrow.CivalTwilightStart - DateTime.Now.AddSeconds(5);
 
-            // Get back the data
-            SunAndMoonData dataToday = c.GetData(DateTime.Now.Date, lat, lon, TimeZoneDifferenceFromUTC);
-
-
-            StringBuilder sb = new StringBuilder();
-            sb.AppendFormat("Sunrise and Sunset Data\r\n");
-            sb.AppendFormat("Today\r\n");
-
-            c.RenderData(0, dataToday, sb);
-
-            MainTextBox.Text = sb.ToString();
+            ep.Events.Add(new SunEvent
+            {
+                Name = "Immediate Test event",
+                IsSunrise = true,
+                Offset = OffsetForImmediateEvent.Negate(),
+                RetryPeriod = new TimeSpan(0, 1, 0),
+                IsCivil = true
+            });
         }
 
         protected override void OnShown(EventArgs e)
         {
+            //Form is never actually closed, just minimized with no taskbar entry, so this fires only once
             base.OnShown(e);
-            SetInitialData();
+            AddDefaultEvents();
+            UpdateSummary();
+            EventTimer.Interval = 100; //Timer tick resets to longer interval
+            EventTimer.Enabled = true;
+
         }
+
+        #endregion
 
         #region "Tray Icon"
 
@@ -102,10 +114,45 @@ namespace SunEvents
 
         private void exitToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            WindowState = FormWindowState.Normal;
+            WindowState = FormWindowState.Minimized;
             Application.Exit();
         }
 
-#endregion
+        #endregion
+
+        private void EventTimer_Tick(object sender, EventArgs e)
+        {
+            EventTimer.Interval = 15000;
+            ep.ProcessEvents(lat, lon);
+
+            if (WindowState != FormWindowState.Minimized)
+            {
+                UpdateSummary();
+            }
+        }
+
+
+        public void UpdateSummary()
+        {
+            Twilight c = new Twilight();
+
+            StringBuilder sb = new StringBuilder();
+            sb.AppendFormat("Sunrise and Sunset Data\r\n");
+
+            // Get back the data
+            SunAndMoonData dataToday = c.GetData(DateTime.Now.Date, lat, lon, (DateTime.Now - DateTime.UtcNow).TotalHours);
+            SunAndMoonData dataTomorrow = c.GetData(DateTime.Now.AddDays(1).Date, lat, lon, (DateTime.Now.AddDays(1) - DateTime.UtcNow.AddDays(1)).TotalHours);
+
+            sb.AppendFormat("Today\r\n");
+            c.RenderData(0, dataToday, sb);
+
+            sb.AppendFormat("Tomorrow\r\n");
+            c.RenderData(0, dataTomorrow, sb);
+
+            sb.Append(Environment.NewLine + ep.ToString());
+
+            MainTextBox.Text = sb.ToString();
+        }
+
     }
 }

@@ -37,6 +37,7 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TrayIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.MainTextBox = new System.Windows.Forms.TextBox();
+            this.EventTimer = new System.Windows.Forms.Timer(this.components);
             this.TrayMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -89,14 +90,19 @@
             this.MainTextBox.Multiline = true;
             this.MainTextBox.Name = "MainTextBox";
             this.MainTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.MainTextBox.Size = new System.Drawing.Size(286, 188);
+            this.MainTextBox.Size = new System.Drawing.Size(614, 437);
             this.MainTextBox.TabIndex = 1;
+            // 
+            // EventTimer
+            // 
+            this.EventTimer.Interval = 15000;
+            this.EventTimer.Tick += new System.EventHandler(this.EventTimer_Tick);
             // 
             // SunEventsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.ClientSize = new System.Drawing.Size(612, 438);
             this.Controls.Add(this.MainTextBox);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "SunEventsForm";
@@ -117,6 +123,7 @@
         private System.Windows.Forms.ToolStripMenuItem showToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem1;
         private System.Windows.Forms.TextBox MainTextBox;
+        private System.Windows.Forms.Timer EventTimer;
     }
 }
 

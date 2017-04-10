@@ -47,6 +47,15 @@ namespace SunEvents
 
         private void FireEvent(SunEvent se)
         {
+            if (se.Disabled)
+            {
+                Debug.Print($"Event \"{se.Name}\" NOT firing at {DateTime.Now} because it is DISABLED.");
+
+                //Still set as fired so that it does not trigger again
+                se.EventFired = true;
+                return;
+            }
+
             String msg= $"Event \"{se.Name}\" Fired at {DateTime.Now}";
             Debug.Print(msg);
             se.EventFired = true;
@@ -60,7 +69,7 @@ namespace SunEvents
                 p.Start();
             }
 
-            System.Windows.Forms.MessageBox.Show(msg);
+            //System.Windows.Forms.MessageBox.Show(msg);
         }
 
         /// <summary>

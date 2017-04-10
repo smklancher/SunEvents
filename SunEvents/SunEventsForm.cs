@@ -49,7 +49,8 @@ namespace SunEvents
                 IsSunrise = true,
                 Offset = OffsetForImmediateEvent.Negate(),
                 RetryPeriod = new TimeSpan(0, 1, 0),
-                IsCivil = true
+                IsCivil = true,
+                Disabled = true
             });
         }
 

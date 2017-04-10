@@ -18,12 +18,13 @@ namespace SunEvents
         public bool EventFired = false; //only relevant between TargetTime and RetryPeriod: After that the target needs to be recalculated for the next day
         public DateTime? TargetTime;
         public String Name;
-
+        public bool Disabled;
+        
         public override string ToString()
         {
             String OffsetString = (Offset.TotalSeconds != 0 ? (Offset.TotalSeconds < 0 ? $"{Offset} before " : $"{Offset} before ") : "");
 
-            return (EventFired ? "[EventFired] " : "") + $"\"{Name}\" is set for " + OffsetString +
+            return (EventFired ? "[EventFired] " : "") + (Disabled ? "[Disabled]" : "") + $"\"{Name}\" is set for " + OffsetString +
                 (IsCivil ? "civil " : "") + (IsSunrise ? "sunrise " : "sunset ") +
                 (TargetTime.HasValue ? $"is scheduled for {TargetTime}." : "is not scheduled yet.") +
                 $"  It will retry for {RetryPeriod}" + (!String.IsNullOrEmpty(Command) ? $" to run command: {Command} {CommandArgs}" : "") + ".";

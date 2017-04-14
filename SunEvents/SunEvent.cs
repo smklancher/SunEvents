@@ -29,5 +29,12 @@ namespace SunEvents
                 (TargetTime.HasValue ? $"is scheduled for {TargetTime}." : "is not scheduled yet.") +
                 $"  It will retry for {RetryPeriod}" + (!String.IsNullOrEmpty(Command) ? $" to run command: {Command} {CommandArgs}" : "") + ".";
         }
+
+        public string Time()
+        {
+            return (TargetTime.HasValue ? 
+                TargetTime.Value.ToShortTimeString() + " " + TargetTime.Value.ToShortDateString()
+                : "No Target Time");
+        }
     }
 }

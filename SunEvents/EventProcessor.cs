@@ -10,6 +10,7 @@ namespace SunEvents
     class EventProcessor
     {
         public List<SunEvent> Events { get; } = new List<SunEvent> { };
+        public SunEvent NextEvent { get; set; }
 
         public void ProcessEvents(double lat, double lon)
         {
@@ -40,9 +41,33 @@ namespace SunEvents
                         FireEvent(se);
                     }
                 }
-
                 
             }
+
+            //Update next event
+            NextEvent = GetNextEvent();
+        }
+
+        private SunEvent GetNextEvent()
+        {
+            SunEvent closestEvent=null;
+
+            foreach (SunEvent se in Events)
+            {
+                if (closestEvent == null)
+                {
+                    closestEvent = se;
+                }
+                else
+                {
+                    //current event is after now but closer than current closest
+                    if(se.TargetTime.HasValue && se.TargetTime.Value>DateTime.Now && se.TargetTime.Value<closestEvent.TargetTime.Value)
+                    {
+                        closestEvent = se;
+                    }
+                }
+            }
+            return closestEvent;
         }
 
         private void FireEvent(SunEvent se)

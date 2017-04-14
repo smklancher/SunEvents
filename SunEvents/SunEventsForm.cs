@@ -150,9 +150,16 @@ namespace SunEvents
             sb.AppendFormat("Tomorrow\r\n");
             c.RenderData(0, dataTomorrow, sb);
 
-            sb.Append(Environment.NewLine + ep.ToString());
+            sb.Append(Environment.NewLine + "Next Event: " + (ep.NextEvent != null ? ep.NextEvent.ToString() : "None"));
+
+            sb.Append(Environment.NewLine + Environment.NewLine + ep.ToString());
 
             MainTextBox.Text = sb.ToString();
+
+            if(ep.NextEvent != null)
+            {
+                TrayIcon.Text = "Next Event: " + ep.NextEvent.Time();
+            }
         }
 
     }

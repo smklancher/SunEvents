@@ -75,7 +75,7 @@ namespace SunEvents
             if (se.Disabled)
             {
                 Debug.Print($"Event \"{se.Name}\" NOT firing at {DateTime.Now} because it is DISABLED.");
-
+                
                 //Still set as fired so that it does not trigger again
                 se.EventFired = true;
                 return;
@@ -83,6 +83,12 @@ namespace SunEvents
 
             String msg= $"Event \"{se.Name}\" Fired at {DateTime.Now}";
             Debug.Print(msg);
+
+            msg = $"Event \"{se.Name}\" wants to run cmd \"{se.Command} {se.CommandArgs}\"";
+
+            var x = new Notification();
+            var result=x.SimpleNotification(msg);
+
             se.EventFired = true;
 
             if (!String.IsNullOrEmpty(se.Command))
@@ -96,6 +102,7 @@ namespace SunEvents
 
             //System.Windows.Forms.MessageBox.Show(msg);
         }
+        
 
         /// <summary>
         /// Set the target time when the event should occur
@@ -105,7 +112,7 @@ namespace SunEvents
         /// <param name="lon"></param>
         private void SetTargetTime(SunEvent se, double lat, double lon)
         {
-            // Creae instance of the class
+            // Create instance of the class
             Twilight c = new Twilight();
 
             //The offset will change how far forward we need to look for "today"
@@ -136,6 +143,7 @@ namespace SunEvents
                 SunAndMoonData dataTomorrow = c.GetData(dayToGetData.Date, lat, lon, (DateTime.Now - DateTime.UtcNow).TotalHours);
 
                 //BUG: Something is wrong here
+                //Past Stephen should have been more descriptive.  As far as I know, I believe this is working.
 
                 se.TargetTime= SunTimeByType(se, dataTomorrow) + se.Offset;
                 Debug.Print($"Possible target for {se.Name} was past cutoff time of {CutoffForEventToday}, target for tomorrow: {se.TargetTime}");

@@ -22,12 +22,16 @@ namespace SunEvents
         
         public override string ToString()
         {
-            String OffsetString = (Offset.TotalSeconds != 0 ? (Offset.TotalSeconds < 0 ? $"{Offset} before " : $"{Offset} before ") : "");
+            String OffsetString = (Offset.TotalSeconds != 0 ? (Offset.TotalSeconds < 0 ? $"{Offset} before " : $"{Offset} after ") : "");
 
-            return (EventFired ? "[EventFired] " : "") + (Disabled ? "[Disabled]" : "") + $"\"{Name}\" is set for " + OffsetString +
-                (IsCivil ? "civil " : "") + (IsSunrise ? "sunrise " : "sunset ") +
+            return (EventFired ? "[EventFired] " : "") + 
+                (Disabled ? "[Disabled]" : "") + 
+                $"\"{Name}\" is set for " + OffsetString +
+                (IsCivil ? "civil " : "") + 
+                (IsSunrise ? "sunrise " : "sunset ") +
                 (TargetTime.HasValue ? $"is scheduled for {TargetTime}." : "is not scheduled yet.") +
-                $"  It will retry for {RetryPeriod}" + (!String.IsNullOrEmpty(Command) ? $" to run command: {Command} {CommandArgs}" : "") + ".";
+                $"  It will retry for {RetryPeriod}" + 
+                (!String.IsNullOrEmpty(Command) ? $" to run command: {Command} {CommandArgs}" : "") + ".";
         }
 
         public string Time()

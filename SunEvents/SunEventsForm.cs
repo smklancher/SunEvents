@@ -1,9 +1,12 @@
-﻿using System;
+﻿using DesktopToast;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -29,9 +32,9 @@ namespace SunEvents
             //Could add interface to edit and persist in the future
             ep.Events.Add(new SunEvent
             {
-                Name = "Sleep 7 hours before sunrise (civil)",
+                Name = "Sleep 8 hours before sunrise (civil)",
                 IsSunrise = true,
-                Offset = new TimeSpan(-7, 0, 0),
+                Offset = new TimeSpan(-8, 0, 0),
                 Command = "psshutdown",
                 CommandArgs = "-d -t 0",
                 RetryPeriod = new TimeSpan(1, 0, 0),
@@ -50,9 +53,44 @@ namespace SunEvents
                 Offset = OffsetForImmediateEvent.Negate(),
                 RetryPeriod = new TimeSpan(0, 1, 0),
                 IsCivil = true,
-                Disabled = true
+                Disabled = false
             });
         }
+
+        private async Task<string> ShowToastAsync(string msg)
+        {
+            var request = new ToastRequest
+            {
+                ToastTitle = msg,
+                ToastBodyList = new[] { msg },
+                //ToastAudio = DesktopToast.ToastAudio.LoopingCall,
+                ShortcutFileName = "SunEvents.lnk",
+                ShortcutTargetFilePath = Assembly.GetExecutingAssembly().Location,
+                AppId = "SunEvents",
+            };
+
+            request.ToastXml = @"<toast launch='action=viewFriendRequest&amp;userId=49183'>
+
+  <visual>
+    <binding template='ToastGeneric'>
+      <text>Matt sent you a friend request</text>
+      <text>Hey, wanna dress up as wizards and ride around on our hoverboards together?</text>
+      <image placement='appLogoOverride' hint-crop='circle' src='https://unsplash.it/64?image=1005'/>
+    </binding>
+  </visual>
+
+  <actions>
+    <action content='Accept' activationType='background' arguments='action=acceptFriendRequest&amp;userId=49183'/>
+    <action content='Decline' activationType='background' arguments='action=declineFriendRequest&amp;userId=49183'/>
+  </actions>
+
+</toast>";
+
+            var result = await ToastManager.ShowAsync(request);
+
+            return result.ToString();
+        }
+
 
         protected override void OnShown(EventArgs e)
         {
@@ -63,7 +101,22 @@ namespace SunEvents
             EventTimer.Interval = 100; //Timer tick resets to longer interval
             EventTimer.Enabled = true;
 
+
+            //testing notifications
+
+            // For Action Center of Windows 10
+            //NotificationActivator.RegisterComType(typeof(NotificationActivator), OnActivated);
+
+            //NotificationHelper.RegisterComServer(typeof(NotificationActivator), Assembly.GetExecutingAssembly().Location);
+            //NotificationHelper.UnregisterComServer(typeof(NotificationActivator));
+
+            //var x = new Notification();
+            //x.SimpleNotification("Test Message");
+
+            //var task = await ShowToastAsync("Test Message");
+            //MessageBox.Show(task);
         }
+
 
         #endregion
 
@@ -161,6 +214,5 @@ namespace SunEvents
                 TrayIcon.Text = "Next Event: " + ep.NextEvent.Time();
             }
         }
-
     }
 }

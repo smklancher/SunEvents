@@ -86,8 +86,8 @@ namespace SunEvents
 
             msg = $"Event \"{se.Name}\" wants to run cmd \"{se.Command} {se.CommandArgs}\"";
 
-            var x = new Notification();
-            var result=x.SimpleNotification(msg);
+            //var x = new Notification();
+            //var result=x.SimpleNotification(msg);
 
             se.EventFired = true;
 

@@ -5,8 +5,6 @@ VisualStudioVersion = 15.0.26403.7
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SunEvents", "SunEvents\SunEvents.csproj", "{796A9549-270D-40C1-A4C9-CC21CDC91AE1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesktopToast", "DesktopToast\DesktopToast.csproj", "{B8D704D5-FB0C-4C2D-8189-72C6649BA157}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,12 +15,11 @@ Global
 		{796A9549-270D-40C1-A4C9-CC21CDC91AE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{796A9549-270D-40C1-A4C9-CC21CDC91AE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{796A9549-270D-40C1-A4C9-CC21CDC91AE1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B8D704D5-FB0C-4C2D-8189-72C6649BA157}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B8D704D5-FB0C-4C2D-8189-72C6649BA157}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B8D704D5-FB0C-4C2D-8189-72C6649BA157}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B8D704D5-FB0C-4C2D-8189-72C6649BA157}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4139FB49-23BE-44FD-915D-5646D94DA4BC}
 	EndGlobalSection
 EndGlobal

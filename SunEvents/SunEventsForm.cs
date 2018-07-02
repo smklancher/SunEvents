@@ -1,4 +1,4 @@
-﻿using DesktopToast;
+﻿//using DesktopToast;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -57,39 +57,40 @@ namespace SunEvents
             });
         }
 
-        private async Task<string> ShowToastAsync(string msg)
-        {
-            var request = new ToastRequest
-            {
-                ToastTitle = msg,
-                ToastBodyList = new[] { msg },
-                //ToastAudio = DesktopToast.ToastAudio.LoopingCall,
-                ShortcutFileName = "SunEvents.lnk",
-                ShortcutTargetFilePath = Assembly.GetExecutingAssembly().Location,
-                AppId = "SunEvents",
-            };
 
-            request.ToastXml = @"<toast launch='action=viewFriendRequest&amp;userId=49183'>
+//        private async Task<string> ShowToastAsync(string msg)
+//        {
+//            var request = new ToastRequest
+//            {
+//                ToastTitle = msg,
+//                ToastBodyList = new[] { msg },
+//                //ToastAudio = DesktopToast.ToastAudio.LoopingCall,
+//                ShortcutFileName = "SunEvents.lnk",
+//                ShortcutTargetFilePath = Assembly.GetExecutingAssembly().Location,
+//                AppId = "SunEvents",
+//            };
 
-  <visual>
-    <binding template='ToastGeneric'>
-      <text>Matt sent you a friend request</text>
-      <text>Hey, wanna dress up as wizards and ride around on our hoverboards together?</text>
-      <image placement='appLogoOverride' hint-crop='circle' src='https://unsplash.it/64?image=1005'/>
-    </binding>
-  </visual>
+//            request.ToastXml = @"<toast launch='action=viewFriendRequest&amp;userId=49183'>
 
-  <actions>
-    <action content='Accept' activationType='background' arguments='action=acceptFriendRequest&amp;userId=49183'/>
-    <action content='Decline' activationType='background' arguments='action=declineFriendRequest&amp;userId=49183'/>
-  </actions>
+//  <visual>
+//    <binding template='ToastGeneric'>
+//      <text>Matt sent you a friend request</text>
+//      <text>Hey, wanna dress up as wizards and ride around on our hoverboards together?</text>
+//      <image placement='appLogoOverride' hint-crop='circle' src='https://unsplash.it/64?image=1005'/>
+//    </binding>
+//  </visual>
 
-</toast>";
+//  <actions>
+//    <action content='Accept' activationType='background' arguments='action=acceptFriendRequest&amp;userId=49183'/>
+//    <action content='Decline' activationType='background' arguments='action=declineFriendRequest&amp;userId=49183'/>
+//  </actions>
 
-            var result = await ToastManager.ShowAsync(request);
+//</toast>";
 
-            return result.ToString();
-        }
+//            var result = await ToastManager.ShowAsync(request);
+
+//            return result.ToString();
+//        }
 
 
         protected override void OnShown(EventArgs e)

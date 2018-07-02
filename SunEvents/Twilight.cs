@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace SunEvents
 {
+    /// <summary>
+    /// Taken from the following url, although it notes that the original source of the code is unknown;
+    /// http://wiki.crowe.co.nz/Sunset.ashx
+    /// </summary>
     class Twilight
     {
         public SunAndMoonData GetData(DateTime dt, double lat, double lng, double TimeZoneDifferenceFromUTC)

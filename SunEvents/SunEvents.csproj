@@ -32,12 +32,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>orange-sun-256.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Toolkit.Uwp.Notifications, Version=1.4.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Toolkit.Uwp.Notifications.1.4.1\lib\dotnet\Microsoft.Toolkit.Uwp.Notifications.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -52,8 +50,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EventProcessor.cs" />
-    <Compile Include="Notification.cs" />
-    <Compile Include="NotificationActivator.cs" />
     <Compile Include="SunEvent.cs" />
     <Compile Include="SunEventsForm.cs">
       <SubType>Form</SubType>
@@ -78,7 +74,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -91,15 +86,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="orange-sun-256.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\DesktopToast\DesktopToast.csproj">
-      <Project>{b8d704d5-fb0c-4c2d-8189-72c6649ba157}</Project>
-      <Name>DesktopToast</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

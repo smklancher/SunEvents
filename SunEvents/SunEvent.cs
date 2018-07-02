@@ -19,10 +19,11 @@ namespace SunEvents
         public DateTime? TargetTime;
         public String Name;
         public bool Disabled;
-        
+        private readonly double EPSILON=0.0001;
+
         public override string ToString()
         {
-            String OffsetString = (Offset.TotalSeconds != 0 ? (Offset.TotalSeconds < 0 ? $"{Offset} before " : $"{Offset} after ") : "");
+            String OffsetString = (Math.Abs(Offset.TotalSeconds) > EPSILON ? (Offset.TotalSeconds < 0 ? $"{Offset} before " : $"{Offset} after ") : "");
 
             return (EventFired ? "[EventFired] " : "") + 
                 (Disabled ? "[Disabled]" : "") + 

@@ -15,4 +15,4 @@ new SunEvent
 });
 ```
 
-![Screenshot](Misc/Sunevents.png)
+![Screenshot](Misc/SunEvents.png)
